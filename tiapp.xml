@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ti:app xmlns:ti="http://ti.appcelerator.org">
+    <property name="ti.android.runtime">v8</property>
+    <property name="acs-oauth-secret-production" type="string">DOtGUHI23CxISjd9JAD6N68EeeScszsS</property>
+    <property name="acs-oauth-key-production" type="string">UTtrUqDsKKvsn8Rbzpx5Ti1gYIsVYkoT</property>
+    <property name="acs-api-key-production" type="string">ft3Q55fd6EyXLEYq91m5phb3DZkF1LKJ</property>
+    <property name="acs-oauth-secret-development" type="string">OHqUjGueyMX2RmPSEcZLa9LKpfyK0vum</property>
+    <property name="acs-oauth-key-development" type="string">cf1TFMuAZAygi6ub9Z6CU5br6M0gjJIG</property>
+    <property name="acs-api-key-development" type="string">n1DMSHuqU5kfcTXMzDOcNtgNT10M1yF4</property>
+    <id>info.srihawong.thaimtb</id>
+    <name>ThaiMTB</name>
+    <version>1.0</version>
+    <publisher>Banpot.S</publisher>
+    <url>http://banpot.srihawong.info</url>
+    <description>not specified</description>
+    <copyright>2556 by Banpot.S</copyright>
+    <icon>appicon.png</icon>
+    <persistent-wifi>false</persistent-wifi>
+    <prerendered-icon>false</prerendered-icon>
+    <statusbar-style>default</statusbar-style>
+    <statusbar-hidden>false</statusbar-hidden>
+    <fullscreen>false</fullscreen>
+    <navbar-hidden>false</navbar-hidden>
+    <analytics>true</analytics>
+    <guid>e10cd488-6c7b-4e58-b4b1-c6ace1c8c995</guid>
+    <property name="ti.ui.defaultunit" type="string">system</property>
+    <iphone>
+        <orientations device="iphone">
+            <orientation>Ti.UI.PORTRAIT</orientation>
+        </orientations>
+        <orientations device="ipad">
+            <orientation>Ti.UI.PORTRAIT</orientation>
+            <orientation>Ti.UI.UPSIDE_PORTRAIT</orientation>
+            <orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
+            <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
+        </orientations>
+    </iphone>
+    <android xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <mobileweb>
+        <precache/>
+        <splash>
+            <enabled>true</enabled>
+            <inline-css-images>true</inline-css-images>
+        </splash>
+        <theme>default</theme>
+    </mobileweb>
+    <modules>
+        <module platform="commonjs" version="2.3.1">ti.cloud</module>
+    </modules>
+    <deployment-targets>
+        <target device="iphone">false</target>
+        <target device="ipad">false</target>
+        <target device="blackberry">false</target>
+        <target device="android">true</target>
+        <target device="mobileweb">true</target>
+    </deployment-targets>
+    <sdk-version>3.0.2.GA</sdk-version>
+</ti:app>
