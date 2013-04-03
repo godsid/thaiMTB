@@ -103,9 +103,7 @@ function HomeView() {
 		var detailWindow = new DetailWindow();
 		detailWindow.open(e.rowData.data);
 		
-		
 	});
-	
 	
 	self.add(tbView);
 	return self;
