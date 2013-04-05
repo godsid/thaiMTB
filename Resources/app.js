@@ -50,7 +50,12 @@ var setting = new Setting();
 		}
 	}
 	
-	
-	new Window().open();
+	new Window({
+		layout:'vertical',
+		fullscreen:true,
+		modal:true,
+		navBarHidden:true,
+	}).open();
+		
 	
 })();
