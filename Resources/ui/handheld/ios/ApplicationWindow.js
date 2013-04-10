@@ -12,32 +12,28 @@ function ApplicationWindow() {
 	var masterView = new MasterView(),
 		detailView = new DetailView();
 		
-	masterView.borderColor = '#000';
-	masterView.borderWidth = 1;
-		
 	//create master view container
-	var masterContainer = Ti.UI.createView({
-		top:0,
-		bottom:0,
-		left:0,
-		width:240
+	var masterContainerWindow = Ti.UI.createWindow({
+		title:'Products'
 	});
-	masterContainer.add(masterView);
-	self.add(masterContainer);
+	masterContainerWindow.add(masterView);
 	
 	//create detail view container
-	var detailContainer = Ti.UI.createView({
-		top:0,
-		bottom:0,
-		right:0,
-		left:240
+	var detailContainerWindow = Ti.UI.createWindow({
+		title:'Product Details'
 	});
-	detailContainer.add(detailView);
-	self.add(detailContainer);
+	detailContainerWindow.add(detailView);
+	
+	//create iOS specific NavGroup UI
+	var navGroup = Ti.UI.iPhone.createNavigationGroup({
+		window:masterContainerWindow
+	});
+	self.add(navGroup);
 	
 	//add behavior for master view
 	masterView.addEventListener('itemSelected', function(e) {
 		detailView.fireEvent('itemSelected',e);
+		navGroup.open(detailContainerWindow);
 	});
 	
 	return self;
