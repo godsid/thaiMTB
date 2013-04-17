@@ -39,13 +39,27 @@ function NavBar(){
 	self.add(btHomeView);
 	self.add(sepView);
 	self.add(lbTitle);
+	
+	lbTitle.addEventListener('click',function(e){
+		if(forumid=='thaimtb_news'){
+			forumid='thaimtb_secondhand';
+			this.setText("ประกาศขายมือสอง");
+		}else{
+			forumid='thaimtb_news';
+			this.setText("กระดานข่าว");
+		}
+		self.fireEvent('changeBoard',{
+			
+		});
+	});
+	
 	self.add(Ti.UI.createView({
 		width:2,
 		height:'auto',
 		left:5,
 		backgroundImage:'/images/topnav_sep.png'
 	}));
-	self.add(btLoginView);
+	//self.add(btLoginView);
 	/*
 	btHomeView.addEventListener('click',function(e){
 		self.fireEvent('login', {

@@ -3,6 +3,7 @@ function DetailView() {
 		backgroundColor:'#f7d5cf',
 		layout:'vertical',
 	});
+	var tableData = [];
 	var NavBar = require('/ui/handheld/android/NavBar');
 	var navBar = new NavBar();
 	self.add(navBar);
@@ -16,12 +17,16 @@ function DetailView() {
 	})
 	self.add(loading);
 	var table = Ti.UI.createTableView({
-		
+		separatorColor:'#eff3f9',
 	});
 	loading.show();
 	
 	var client = Ti.Network.createHTTPClient({
-			timeout:5000,
+			timeout:15000,
+			onerror:function(e){
+				Ti.API.debug(e.error);
+				alert('เกิดความผิดพลาดกรุณาลองใหม่อีกครั้ง');
+			},
 			onload:function(e){
 				data = JSON.parse(this.responseText);
 				
@@ -33,19 +38,37 @@ function DetailView() {
 					self.remove(loading);
 					alert("Missing Data");
 				}
+				/*
+				 * Topic
+				 */
+				var topicLabel = Ti.UI.createLabel({
+					top:0,
+					width:'100%',
+					textAlign:'left',
+					text:data.title,
+					backgroundColor:'#006699',
+					font:{fontSize:25},
+					color:'#FFA34F',
+				});
+				
+				
 				for(var i=0,j=data.reads.length; i<j; i++){
 					var tbRow = Ti.UI.createTableViewRow({
 						height:'auto',
 						layout:'vertical',
-						borderWidth:2,
+						//borderWidth:2,
+						
 						//borderColor:'#323D4F'
 					});
+					if(i>0){
+						tbRow.setTop(10);
+					}
 					var userProfile = Ti.UI.createView({
 						top:0,
 						left:0,
 						backgroundColor:'#F9CC79',
-						borderWidth:2,
-						borderColor:'red',
+						//borderWidth:2,
+						//borderColor:'red',
 					});
 					
 					userProfile.add(Ti.UI.createImageView({
@@ -83,62 +106,73 @@ function DetailView() {
 					}));
 					
 					tbRow.add(userProfile);
-					tbRow.add(Ti.UI.createLabel({
-						top:0,
-						left:5,
-						color:'#323D4F',
-						font:{fontSize:20},	
-						//html:"<img src='http://banpot.srihawong.info/wp-content/uploads/2013/03/MotorSHow2013-150x150.jpg'/>",
-						//html:"<html><head><meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" /></head><body style=\"margin:0;padding:0;\">"+data.reads[i].detail+"</body></html>",
-						html:data.reads[i].detail,
-						borderWidth:2,
-					}));
-					if(data.reads[i].gallery.length){
-						//alert(data.reads[i].gallery[0]);
-						var imageGallery = Ti.UI.createImageView({
-							height:300,
-							width:300,
-							borderColor:'red',
+					if(data.reads[i].extImage){
+						data.reads[i].detail = data.reads[i].detail.split("[images]");
+						for(var k=0,l=data.reads[i].detail.length;k<l;k++){
+							tbRow.add(Ti.UI.createLabel({
+								top:0,
+								left:5,
+								color:'#323D4F',
+								font:{fontSize:20},	
+								html:data.reads[i].detail[k],
+								borderWidth:2,
+							}));
+							var imageGallery = Ti.UI.createImageView({
+								top:5,
+								width:Ti.Platform.displayCaps.platformWidth-4,
+								height:'auto',
+								borderColor:'white',
+								borderWidth:2,
+								borderRadius:5,
+								//defaultImage:'/images/imageLoading1.gif',
+								image:"http://srihawong.info/app/thaimtb_image.php?file="+data.reads[i].extImage[k],
+							});
+
+							tbRow.add(imageGallery);
+						}
+					}else{
+						tbRow.add(Ti.UI.createLabel({
+							top:0,
+							left:5,
+							color:'#323D4F',
+							font:{fontSize:20},	
+							html:data.reads[i].detail,
 							borderWidth:2,
-							image:"http://www.nationalgeographic.com/adventure/images/0611/adventure-travel/thailand.jpg?id=3206112",
-							
-							//image:"http://srihawong.info/app/thaimtb_image.php?id=3206112",
-							
-							//defaultImage:'/images/defaultAvatar.png',
-							//images:data.read[i].gallery,
-						});
-						//for(var k=0,l=data.read[i].gallery.length; k<l; k++){
-						//  data.read[i].gallery[k];
-						//};
-						tbRow.add(imageGallery);
+						}));
 					}
-					/*
-					tbRow.add(Ti.UI.createLabel({
-						top:0,
-						left:10,
-						//width:100,
-						height:'auto',
-						color:'#323D4F',
-						font:{fontSize:20},
-						html:data.reads[i].detail,
-						borderWidth:2
-					}));
-					*/
-					table.appendRow(tbRow);
+					if(data.reads[i].gallery.length>0){
+						for(var k=0,l=data.reads[i].gallery.length; k<l; k++){
+							var imageGallery = Ti.UI.createImageView({
+								top:10,
+								width:Ti.Platform.displayCaps.platformWidth-4,
+								height:300,
+								borderColor:'white',
+								borderWidth:2,
+								borderRadius:5,
+								//backgroundImage:'/images/imageLoading.gif',
+								//defaultImage:'/images/imageLoading.gif',
+								image:data.reads[i].gallery[k],
+								
+							});
+							imageGallery.addEventListener('load',function(e){
+								//alert(e);
+								this.setHeight('auto');
+							});
+							tbRow.add(imageGallery);
+						};
+					}
+					tableData.push(tbRow);
+					//table.appendRow(tbRow);
 				}
-				
-				
+				table.setData(tableData);
+				self.add(topicLabel);
 				self.add(table);
 				loading.hide();
 				self.remove(loading);
-				
 			}
 	});
 	
-	//self.add(lbl);
-	
 	self.addEventListener('itemSelected', function(e) {
-		//lbl.text = e.name+': $'+e.id;
 		client.open('GET','srihawong.info/app/thaimtb_read.php?t='+e.id);
 		client.send();
 	});
