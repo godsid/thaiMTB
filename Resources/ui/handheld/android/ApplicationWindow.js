@@ -1,6 +1,7 @@
 function ApplicationWindow() {
 	//declare module dependencies
 	var MasterView = require('ui/common/MasterView'),
+	//var HomeView = require('ui/common/HomeView');
 		DetailView = require('ui/common/DetailView');
 		LoginView = require('ui/common/LoginView');
 	//create object instance
@@ -14,11 +15,14 @@ function ApplicationWindow() {
 	//construct UI
 	var masterView = new MasterView();
 	self.add(masterView);
+	//var homeView = new HomeView();
+	//self.add(homeView);
 	
 	
 	
 	//add behavior for master view
 	masterView.addEventListener('itemSelected', function(e) {
+	//homeView.addEventListener('itemSelected', function(e) {
 		//create detail view container
 		var detailView = new DetailView();
 		var detailContainerWindow = Ti.UI.createWindow({
@@ -31,6 +35,7 @@ function ApplicationWindow() {
 		detailContainerWindow.open();
 	});
 	
+	//homeView.addEventListener('login',function(e){
 	masterView.addEventListener('login',function(e){
 		var loginView = new LoginView();
 		var loginContainerWindow = Ti.UI.createWindow({
@@ -45,9 +50,17 @@ function ApplicationWindow() {
 		loginContainerWindow.open();
 	});
 	
+	//homeView.addEventListener('closeLogin',function(e){
 	masterView.addEventListener('closeLogin',function(e){
 		loginContainerWindow.close();
 	});
+	masterView.addEventListener('changeBoard',function(e){
+		self.remove(masterView);
+		alert(forumid);
+		alert(e);
+		
+	});
+	
 	return self;
 };
 

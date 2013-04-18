@@ -1,126 +1,160 @@
-//FirstView Component Constructor
+//HomeView Component Constructor
 function HomeView() {
-	//create object instance, a parasitic subclass of Observable
+	//create object instance, parasitic subclass of Observable
 	var self = Ti.UI.createView({
-			top:0,
-			width:Ti.Platform.displayCaps.platformWidth
+		//backgroundColor:'white'
+		backgroundColor:'#f7d5cf',
+		layout:'vertical',
+	});
+	var NavBar = require('/ui/handheld/android/NavBar');
+	var navBar = new NavBar();
+	self.add(navBar);
+	navBar.addEventListener('login',function(e){
+		self.fireEvent('login',{
 		});
-	var SecondHandModel = require('/model/SecondHandModel');
-	var secondHandModel = new SecondHandModel(); 
-	var Loading = require('/ui/common/Loading');
-	var loading = new Loading();
+	});
+	
+	
+	var loading = Ti.UI.createActivityIndicator({
+			message: ' Loading...',
+			top:'50%',
+			color:'black',
+			//height:Ti.UI.SIZE,
+			//width:Ti.UI.SIZE
+	})
 	self.add(loading);
+	
+	var table = Ti.UI.createTableView({
+		separatorColor:'#eff3f9',
+	});
+	//some dummy data for our table view
+	var tableData = [];
 	loading.show();
-	
-	var tbView = Ti.UI.createTableView({
-					top:0,
-					//borderRadius:10,
-					borderColor:'#b0b0b0',
-					borderWidth:1,
-		});
-	
-	/*
-	 * Fetch Data
-	 */
-	secondHandModel.send();
-	secondHandModel.onload = function(e){
-		data = JSON.parse(this.responseText).seccondhand;
-		for(var i=0,j=data.length; i<j; i++){
-		  	var tbRow = Ti.UI.createTableViewRow({
-				layout:'vertical',
-				height:'auto',
-				backgroundColor:(i%2)?'#A9B8C2':'#ECECEC',
-				leftImage:'/images/common/shoppingIcon.png',
-				borderWidth:1,
-				borderColor:'#eff3f9',
-				data:data[i]
+	var dataClient = Ti.Network.createHTTPClient({
+		timeout:5000,
+		onload:function(e){
+			
+			var contentData = JSON.parse(this.responseText);
+			var contentDataHeader = contentData.header;
+			contentData = contentData.data;
+			//alert(secondHandData);
+			dataClient.open('GET','http://srihawong.info/app/thaimtb_secondhand.php?page='+(parseInt(secondHandDataHeader.page)+1));
+			
+			var footerTable = Ti.UI.createView({
+				height:50
 			});
 			
-			var row1 = Ti.UI.createView({
-				left:10,
-				height:'auto',
-				layout:'horizontal',
-			});
+			if(contentDataHeader.maxpage>1&&contentDataHeader.page<3){
+				var nextButton = Ti.UI.createButton({
+					top:5,
+					right:5,
+					title:'More...',
+				});
+				footerTable.add(nextButton);
+				footerTable.addEventListener('click',function(e){
+					dataClient.send();
+				});
+			}
 			
-			var row2 = Ti.UI.createView({
-				left:10,
-				height:'auto',
-			
-				layout:'vertical',
+			table.setFooterView(footerTable);
+			for(var i=0,j=tableData.title = contentData.length; i<j; i++){
+				var tbRow = Ti.UI.createTableViewRow({
+					height:'auto',
+					leftImage:'/images/shoppingIcon.png',
+					//color:'#006699',
+					font:{fontSize:20,fontWeight:'bold'},
+					//borderWidth:1,
+					//borderColor:'#eff3f9',
+					backgroundColor:contentData[i].sticky==true?'#F2B179':((i%2)?'#A9B8C2':'#ECECEC'),
+					id:contentData[i].id,
+					//hasChild:true,
+					title:contentData[i].title,
+					layout:'vertical',
+					hasChild:(contentData[i].reply>0?true:false),
+				});
+				
+				
+				var lbTitle = Ti.UI.createLabel({
+					//text:secondHandData[i].title,
+					bottom:5,
+					left:5,
+					font:{fontSize:20,fontWeight:'bold'},
+					color:'#006699',
+					wordWrap:true,
+					//html:secondHandData[i].title+" ("+secondHandData[i].reply+"/"+secondHandData[i].read+")",
+					text:contentData[i].title+" ("+contentData[i].reply+"/"+contentData[i].read+")",
+					
+				});
+				tbRow.add(lbTitle);
+				table.appendRow(tbRow);
+				
+				/*
+			  tableData.push({
+			  		height:'auto',
+			  		title:secondHandData[i].title,
+			  		leftImage:'/android/images/shoppingIcon.png',
+			  		color:'#006699',
+			  		font:{fontSize:20,fontWeight:'bold'},
+			  		borderWidth:1,
+					borderColor:'#eff3f9',
+					backgroundColor:(i%2)?'#A9B8C2':'#ECECEC',
+					
+			  		id:secondHandData[i].id,
+			  		hasChild:true
+			  }); */
+			};
+			/*var loadMore = Ti.UI.createTableViewRow({
+				title:'Loading...',
+				height:30,
 			});
-			
-			/*
-			var lbGroup = Ti.UI.createLabel({
-				text:data[i].group,
-				font:setting.fontSmall,
-				color:setting.colorSmall,
-				left:5,
-				top:0,
-			});
-			row1.add(lbGroup);
-			tbRow.add(row1);
+			table.appendRow(loadMore);
 			*/
-			
-			var lbUser = Ti.UI.createLabel({
-				text:'โดย: '+data[i].user,
-				font:setting.fontSmall,
-				color:setting.colorSmall,
-				bottom:0,
-				width:'auto',
-				left:5,
-				textAlige:'left'
+			var footer = Ti.UI.createView({
+				left:0,top:0,
+				height:200,
+				width:'100%'
+				
 			});
-			var lbCreate = Ti.UI.createLabel({
-				text:data[i].create,
-				font:setting.fontSmall,
-				color:setting.colorSmall,
-				width:'auto',
-				left:5,
-				//top:16,
-				textAlige:'right'
-			});
+			footer.add(Ti.UI.createButton({
+				left:0,
+				width:100,
+				height:50,
+				title:'Back',
+			}));
+			footer.add(Ti.UI.createButton({
+				right:0,
+				width:100,
+				height:50,
+				title:'Next',
+			}));
+			table.footerView = footer; 
 			
-			//row1.add(lbGroup);
-			row1.add(lbCreate);
-			row1.add(lbUser);
-			
-			var lbTitle = Ti.UI.createLabel({
-				text:data[i].title,
-				bottom:5,
-				left:5,
-				font:setting.fontNormalWeight,
-				color:setting.colorNormal,
-				wordWrap:true
-			});
-			
-			row2.add(lbTitle);
-			
-			tbRow.add(row1);
-			tbRow.add(row2);
-			tbView.appendRow(tbRow);
-		};
-		
-		
-		
-		loading.hide();
-		self.remove(loading);
-		self.add(tbView);
-	};
-	
-	tbView.addEventListener('scroll',function(e){
-		if(e.firstVisibleItem+e.visibleItemCount == e.totalItemCount ){
-			secondHandModel.open('GET',setting.apiSecondHandUrl+'?page='+2);
-			secondHandModel.send();
+			loading.hide();
+			self.remove(loading);
+			self.add(table);
 		}
 	});
-	tbView.addEventListener('click',function(e){
-		var DetailWindow = require('/ui/common/DetailWindow');
-		e.rowData.data.title='ประกาศขายมือสอง';
-		var detailWindow = new DetailWindow(e.rowData.data);
-		detailWindow.open();
-	});
+	dataClient.open('GET','http://srihawong.info/app/thaimtb_news.php');
+	dataClient.send();
 	
+	//add behavior
+	table.addEventListener('click', function(e) {
+		self.fireEvent('itemSelected', {
+			id:e.rowData.id,
+			name:e.rowData.title,
+			//price:e.rowData.price
+		});
+	});
+	//table.addEventListener('scroll',function(e){
+		//if(e.firstVisibleItem+e.visibleItemCount == e.totalItemCount ){
+		//	secondHandClient.open('GET','http://srihawong.info/app/thaimtb_secondhand.php?page='+2);
+		//	secondHandClient.send();
+		//}
+		
+		//secondHandClient.open('GET','http://srihawong.info/app/thaimtb_secondhand.php?page='+2);
+		//secondHandClient.send();
+	//});
 	return self;
-}
+};
 
 module.exports = HomeView;

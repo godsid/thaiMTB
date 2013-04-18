@@ -14,6 +14,10 @@
 if (Ti.version < 1.8 ) {
 	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');	  	
 }
+var forumid = 'thaimtb_news';
+//var GA = require('analytics.google');
+//GA.debug = true;
+//var tracker = GA.getTracker("UA-40213149-1");
 
 // This is a single context application with mutliple windows in a stack
 (function() {
@@ -46,3 +50,4 @@ if (Ti.version < 1.8 ) {
 	}
 	new Window().open();
 })();
+//tracker.trackScreen("Home");
