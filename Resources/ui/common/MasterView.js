@@ -121,6 +121,7 @@ function MasterView() {
 			loading.hide();
 			self.remove(loading);
 			self.add(table);
+			tracker.trackScreen(Ti.Platform.osname+"_"+forumid);
 		}
 	});
 	table.setFooterView(footerTable);

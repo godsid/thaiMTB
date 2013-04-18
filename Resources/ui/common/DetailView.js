@@ -169,6 +169,7 @@ function DetailView() {
 				self.add(table);
 				loading.hide();
 				self.remove(loading);
+				tracker.trackScreen(Ti.Platform.osname+"_"+forumid+"_"+data.id);
 			}
 	});
 	

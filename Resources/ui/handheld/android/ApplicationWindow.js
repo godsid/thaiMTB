@@ -56,9 +56,6 @@ function ApplicationWindow() {
 	});
 	masterView.addEventListener('changeBoard',function(e){
 		self.remove(masterView);
-		alert(forumid);
-		alert(e);
-		
 	});
 	
 	return self;

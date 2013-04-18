@@ -29,7 +29,7 @@ function NavBar(){
 		
 		font:{fontSize:30},
 		color:'#005784',
-		text:'ประกาศขายมือสอง'
+		text:'กระดานข่าว'
 	});
 	var btLoginView = Ti.UI.createView({
 		width: 50,
