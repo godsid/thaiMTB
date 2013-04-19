@@ -4,6 +4,7 @@ function ApplicationWindow() {
 	//var HomeView = require('ui/common/HomeView');
 		DetailView = require('ui/common/DetailView');
 		LoginView = require('ui/common/LoginView');
+		InfoView = require('/ui/common/InfoView');
 	//create object instance
 	var self = Ti.UI.createWindow({
 		title:'ประกาศขายมือสอง',
@@ -17,8 +18,12 @@ function ApplicationWindow() {
 	self.add(masterView);
 	//var homeView = new HomeView();
 	//self.add(homeView);
-	
-	
+	var infoView = new InfoView();
+	var infoContainerWindow = Ti.UI.createWindow({
+		title:'แจ้งปัญหาหรือแนะนำ',
+		navBarHidden:true,
+		backgroundColor:'#ffffff'
+	});
 	
 	//add behavior for master view
 	masterView.addEventListener('itemSelected', function(e) {
@@ -33,6 +38,10 @@ function ApplicationWindow() {
 		detailContainerWindow.add(detailView);
 		detailView.fireEvent('itemSelected',e);
 		detailContainerWindow.open();
+		detailView.addEventListener('showInfo',function(e){
+			infoContainerWindow.add(infoView);
+			infoContainerWindow.open();
+		});
 	});
 	
 	//homeView.addEventListener('login',function(e){
@@ -56,6 +65,13 @@ function ApplicationWindow() {
 	});
 	masterView.addEventListener('changeBoard',function(e){
 		self.remove(masterView);
+	});
+	masterView.addEventListener('showInfo',function(e){
+		infoContainerWindow.add(infoView);
+		infoContainerWindow.open();
+	});
+	infoView.addEventListener('closeInfo',function(e){
+		infoContainerWindow.close();
 	});
 	
 	return self;

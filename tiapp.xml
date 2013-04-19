@@ -9,7 +9,7 @@
     <property name="acs-api-key-development" type="string">n1DMSHuqU5kfcTXMzDOcNtgNT10M1yF4</property>
     <id>info.srihawong.thaimtb</id>
     <name>ThaiMTB</name>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <publisher>Banpot.S</publisher>
     <url>http://banpot.srihawong.info</url>
     <description>not specified</description>

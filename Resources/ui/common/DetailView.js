@@ -139,7 +139,7 @@ function DetailView() {
 							html:data.reads[i].detail,
 							borderWidth:2,
 							backgroundPaddingLeft:5,
-							autoLink:true,
+							//autoLink:true,
 						}));
 					}
 					if(data.reads[i].gallery.length>0){
@@ -171,13 +171,16 @@ function DetailView() {
 				self.add(table);
 				loading.hide();
 				self.remove(loading);
-				tracker.trackScreen(Ti.Platform.osname+"_"+forumid+"_"+data.id);
+				tracker.trackScreen(Ti.Platform.osname+"/"+forumid+"/"+data.id);
 			}
 	});
 	
 	self.addEventListener('itemSelected', function(e) {
 		client.open('GET','srihawong.info/app/thaimtb_read.php?t='+e.id);
 		client.send();
+	});
+	navBar.addEventListener('showInfo', function(e) {
+		self.fireEvent('showInfo',{});
 	});
 	
 	return self;

@@ -31,6 +31,12 @@ function NavBar(){
 		color:'#005784',
 		text:'กระดานข่าว'
 	});
+	
+	var btInfoView = Ti.UI.createView({
+		width:50,
+		height:50,
+		backgroundImage:'/images/infoIcon.png'
+	});
 	var btLoginView = Ti.UI.createView({
 		width: 50,
 		height:50,
@@ -39,7 +45,19 @@ function NavBar(){
 	self.add(btHomeView);
 	self.add(sepView);
 	self.add(lbTitle);
-	
+	self.add(Ti.UI.createView({
+		width:2,
+		height:'auto',
+		left:5,
+		backgroundImage:'/images/topnav_sep.png'
+	}));
+	self.add(btInfoView);
+	self.add(Ti.UI.createView({
+		width:2,
+		height:'auto',
+		left:5,
+		backgroundImage:'/images/topnav_sep.png'
+	}));
 	lbTitle.addEventListener('click',function(e){
 		if(forumid=='news'){
 			forumid='secondhand';
@@ -53,12 +71,7 @@ function NavBar(){
 		});
 	});
 	
-	self.add(Ti.UI.createView({
-		width:2,
-		height:'auto',
-		left:5,
-		backgroundImage:'/images/topnav_sep.png'
-	}));
+	
 	//self.add(btLoginView);
 	/*
 	btHomeView.addEventListener('click',function(e){
@@ -70,6 +83,10 @@ function NavBar(){
 	btLoginView.addEventListener('click',function(e){
 		self.fireEvent('login', {
 			
+		});
+	});
+	btInfoView.addEventListener('click',function(e){
+		self.fireEvent('showInfo', {
 		});
 	});
 	return self;

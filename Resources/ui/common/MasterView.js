@@ -120,7 +120,7 @@ function MasterView() {
 			loading.hide();
 			self.remove(loading);
 			self.add(table);
-			tracker.trackScreen(Ti.Platform.osname+"_"+forumid);
+			tracker.trackScreen(Ti.Platform.osname+"/"+forumid);
 		}
 	});
 	table.setFooterView(footerTable);
@@ -170,6 +170,9 @@ function MasterView() {
 		table.scrollToIndex(0);
 		secondHandClient.open('GET','http://srihawong.info/app/thaimtb_'+forumid+'.php');
 		secondHandClient.send();
+	});
+	navBar.addEventListener('showInfo', function(e) {
+		self.fireEvent('showInfo',{});
 	});
 	//table.addEventListener('scroll',function(e){
 		//if(e.firstVisibleItem+e.visibleItemCount == e.totalItemCount ){
