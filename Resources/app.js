@@ -14,7 +14,18 @@
 if (Ti.version < 1.8 ) {
 	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');	  	
 }
+<<<<<<< HEAD
 var forumid = 'thaimtb_secondhand';
+=======
+var forumid = 'thaimtb_news';
+
+var GA = require('analytics.google');
+//GA.optOut = true;
+GA.debug = true;
+
+var tracker = GA.getTracker("UA-40209680-1");
+
+>>>>>>> 46aab4378e7fc2e7e9e8fc29ac03ae549b61fa61
 // This is a single context application with mutliple windows in a stack
 (function() {
 	//determine platform and form factor and render approproate components
@@ -46,3 +57,15 @@ var forumid = 'thaimtb_secondhand';
 	}
 	new Window().open();
 })();
+tracker.trackTiming({
+	category: "",
+	time: 10,
+	name: "",
+	label: ""
+});
+tracker.trackEvent({
+	category: "category",
+	action: "open",
+	label: "app",
+	value: 1
+});

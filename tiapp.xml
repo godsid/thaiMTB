@@ -39,13 +39,14 @@
     <mobileweb>
         <precache/>
         <splash>
-            <enabled>true</enabled>
+            <enabled>false</enabled>
             <inline-css-images>true</inline-css-images>
         </splash>
         <theme>default</theme>
     </mobileweb>
     <modules>
         <module platform="commonjs" version="2.3.1">ti.cloud</module>
+        <module platform="android" version="1.0">analytics.google</module>
     </modules>
     <deployment-targets>
         <target device="tizen">false</target>
