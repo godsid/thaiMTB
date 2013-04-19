@@ -41,11 +41,11 @@ function NavBar(){
 	self.add(lbTitle);
 	
 	lbTitle.addEventListener('click',function(e){
-		if(forumid=='thaimtb_news'){
-			forumid='thaimtb_secondhand';
+		if(forumid=='news'){
+			forumid='secondhand';
 			this.setText("ประกาศขายมือสอง");
 		}else{
-			forumid='thaimtb_news';
+			forumid='news';
 			this.setText("กระดานข่าว");
 		}
 		self.fireEvent('changeBoard',{

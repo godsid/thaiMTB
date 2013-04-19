@@ -132,12 +132,14 @@ function DetailView() {
 						}
 					}else{
 						tbRow.add(Ti.UI.createLabel({
-							top:0,
+							top:10,
 							left:5,
 							color:'#323D4F',
 							font:{fontSize:20},	
 							html:data.reads[i].detail,
 							borderWidth:2,
+							backgroundPaddingLeft:5,
+							autoLink:true,
 						}));
 					}
 					if(data.reads[i].gallery.length>0){

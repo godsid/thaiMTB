@@ -14,7 +14,7 @@
 if (Ti.version < 1.8 ) {
 	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');	  	
 }
-var forumid = 'thaimtb_news';
+var forumid = 'news';
 
 var GA = require('analytics.google');
 //GA.optOut = true;

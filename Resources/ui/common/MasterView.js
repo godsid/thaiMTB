@@ -11,7 +11,6 @@ function MasterView() {
 	var navBar = new NavBar();
 	self.add(navBar);
 
-	
 	var loading = Ti.UI.createActivityIndicator({
 			message: ' Loading...',
 			top:'50%',
@@ -49,7 +48,7 @@ function MasterView() {
 			var secondHandData = JSON.parse(this.responseText);
 			var secondHandDataHeader = secondHandData.header;
 			secondHandData = secondHandData.secondhand;
-			secondHandClient.open('GET','http://srihawong.info/app/'+forumid+'.php?page='+(parseInt(secondHandDataHeader.page)+1));
+			secondHandClient.open('GET','http://srihawong.info/app/thaimtb_'+forumid+'.php?page='+(parseInt(secondHandDataHeader.page)+1));
 			
 			if(secondHandDataHeader.maxpage<=1||secondHandDataHeader.page>=secondHandDataHeader.maxpage){
 				nextButton.removeEventListener('click');
@@ -147,7 +146,7 @@ function MasterView() {
 	*/
 	//table.footerView = footer; 
 	
-	secondHandClient.open('GET','http://srihawong.info/app/'+forumid+'.php');
+	secondHandClient.open('GET','http://srihawong.info/app/thaimtb_'+forumid+'.php');
 	secondHandClient.send();
 	table.addEventListener('click', function(e) {
 		self.fireEvent('itemSelected', {
@@ -169,7 +168,7 @@ function MasterView() {
 	navBar.addEventListener('changeBoard',function(e){
 		tableData = [];
 		table.scrollToIndex(0);
-		secondHandClient.open('GET','http://srihawong.info/app/'+forumid+'.php');
+		secondHandClient.open('GET','http://srihawong.info/app/thaimtb_'+forumid+'.php');
 		secondHandClient.send();
 	});
 	//table.addEventListener('scroll',function(e){
