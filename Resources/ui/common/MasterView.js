@@ -121,10 +121,7 @@ function MasterView() {
 			loading.hide();
 			self.remove(loading);
 			self.add(table);
-<<<<<<< HEAD
-=======
 			tracker.trackScreen(Ti.Platform.osname+"_"+forumid);
->>>>>>> 46aab4378e7fc2e7e9e8fc29ac03ae549b61fa61
 		}
 	});
 	table.setFooterView(footerTable);

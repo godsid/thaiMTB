@@ -169,10 +169,7 @@ function DetailView() {
 				self.add(table);
 				loading.hide();
 				self.remove(loading);
-<<<<<<< HEAD
-=======
 				tracker.trackScreen(Ti.Platform.osname+"_"+forumid+"_"+data.id);
->>>>>>> 46aab4378e7fc2e7e9e8fc29ac03ae549b61fa61
 			}
 	});
 	
