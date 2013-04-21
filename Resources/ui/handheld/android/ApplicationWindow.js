@@ -3,19 +3,31 @@ function ApplicationWindow() {
 	var MasterView = require('ui/common/MasterView'),
 	//var HomeView = require('ui/common/HomeView');
 		DetailView = require('ui/common/DetailView');
+		NavBar = require('NavBar');
 		LoginView = require('ui/common/LoginView');
 		InfoView = require('/ui/common/InfoView');
+		
 	//create object instance
 	var self = Ti.UI.createWindow({
 		title:'ประกาศขายมือสอง',
 		exitOnClose:true,
 		navBarHidden:true,
-		backgroundColor:'#f7d5cf'
+		backgroundColor:'#f7d5cf',
+		//barImage:'/images/topnavBackground.png',
 	});
 		
 	//construct UI
 	var masterView = new MasterView();
 	self.add(masterView);
+	
+	
+	
+	var navBar = new NavBar();
+	self.add(navBar);
+	
+	
+	
+	
 	//var homeView = new HomeView();
 	//self.add(homeView);
 	var infoView = new InfoView();
@@ -24,6 +36,24 @@ function ApplicationWindow() {
 		navBarHidden:true,
 		backgroundColor:'#ffffff'
 	});
+	
+	/*
+	navBar.addEventListener('login',function(e){
+		self.fireEvent('login',{
+		});
+	});
+	*/
+	navBar.addEventListener('changeBoard',function(e){
+		/*tableData = [];
+		table.scrollToIndex(0);
+		secondHandClient.open('GET','http://srihawong.info/app/thaimtb_'+forumid+'.php');
+		secondHandClient.send();
+		*/
+	});
+	navBar.addEventListener('showInfo', function(e) {
+		self.fireEvent('showInfo',{});
+	});
+	
 	
 	//add behavior for master view
 	masterView.addEventListener('itemSelected', function(e) {
@@ -45,6 +75,7 @@ function ApplicationWindow() {
 	});
 	
 	//homeView.addEventListener('login',function(e){
+		/*
 	masterView.addEventListener('login',function(e){
 		var loginView = new LoginView();
 		var loginContainerWindow = Ti.UI.createWindow({
@@ -58,11 +89,14 @@ function ApplicationWindow() {
 		//detailView.fireEvent('itemSelected',e);
 		loginContainerWindow.open();
 	});
-	
+	*/
 	//homeView.addEventListener('closeLogin',function(e){
-	masterView.addEventListener('closeLogin',function(e){
+	/*
+	 
+	 masterView.addEventListener('closeLogin',function(e){
 		loginContainerWindow.close();
 	});
+	*/
 	masterView.addEventListener('changeBoard',function(e){
 		self.remove(masterView);
 	});

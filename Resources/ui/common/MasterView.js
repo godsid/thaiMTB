@@ -7,16 +7,11 @@ function MasterView() {
 		layout:'vertical',
 	});
 	var tableData = [];
-	var NavBar = require('/ui/handheld/android/NavBar');
-	var navBar = new NavBar();
-	self.add(navBar);
-
+	
 	var loading = Ti.UI.createActivityIndicator({
 			message: ' Loading...',
 			top:'50%',
 			color:'black',
-			//height:Ti.UI.SIZE,
-			//width:Ti.UI.SIZE
 	})
 	self.add(loading);
 	
@@ -28,7 +23,7 @@ function MasterView() {
 		height:50
 	});
 	var nextButton = Ti.UI.createButton({
-		top:0,
+		top:5,
 		right:5,
 		title:'More...',
 		enabled:false,
@@ -69,8 +64,9 @@ function MasterView() {
 					//borderColor:'#eff3f9',
 					backgroundColor:secondHandData[i].sticky==true?'#F2B179':((i%2)?'#A9B8C2':'#ECECEC'),
 					id:secondHandData[i].id,
+					topic:secondHandData[i].title,
 					//hasChild:true,
-					title:secondHandData[i].title,
+					//title:secondHandData[i].title,
 					layout:'vertical',
 					hasChild:(secondHandData[i].reply>0?true:false),
 				});
@@ -151,8 +147,7 @@ function MasterView() {
 	table.addEventListener('click', function(e) {
 		self.fireEvent('itemSelected', {
 			id:e.rowData.id,
-			name:e.rowData.title,
-			//price:e.rowData.price
+			topic:e.rowData.topic,
 		});
 	});
 	nextButton.addEventListener('click',function(e){
@@ -161,19 +156,7 @@ function MasterView() {
 		secondHandClient.send();
 	});
 	//add behavior
-	navBar.addEventListener('login',function(e){
-		self.fireEvent('login',{
-		});
-	});
-	navBar.addEventListener('changeBoard',function(e){
-		tableData = [];
-		table.scrollToIndex(0);
-		secondHandClient.open('GET','http://srihawong.info/app/thaimtb_'+forumid+'.php');
-		secondHandClient.send();
-	});
-	navBar.addEventListener('showInfo', function(e) {
-		self.fireEvent('showInfo',{});
-	});
+	
 	//table.addEventListener('scroll',function(e){
 		//if(e.firstVisibleItem+e.visibleItemCount == e.totalItemCount ){
 		//	secondHandClient.open('GET','http://srihawong.info/app/thaimtb_secondhand.php?page='+2);

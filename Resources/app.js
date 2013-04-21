@@ -14,25 +14,30 @@
 if (Ti.version < 1.8 ) {
 	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');	  	
 }
+//var win = null;
 var forumid = 'news';
+var forumName = 'กระดานข่าว';
 
+//determine platform and form factor and render approproate components
+var APP = {	osname : Ti.Platform.osname,
+			version : Ti.Platform.version,
+			name : Ti.Platform.name,
+			height : Ti.Platform.displayCaps.platformHeight,
+			width : Ti.Platform.displayCaps.platformWidth,
+	};
+Ti.API.debug(Ti.Platform.ostype);
 var GA = require('analytics.google');
 //GA.optOut = true;
-GA.debug = true;
-
+GA.debug = false;
 var tracker = GA.getTracker("UA-40209680-1");
 
 // This is a single context application with mutliple windows in a stack
 (function() {
-	//determine platform and form factor and render approproate components
-	var osname = Ti.Platform.osname,
-		version = Ti.Platform.version,
-		height = Ti.Platform.displayCaps.platformHeight,
-		width = Ti.Platform.displayCaps.platformWidth;
+	
 	
 	//considering tablet to have one dimension over 900px - this is imperfect, so you should feel free to decide
 	//yourself what you consider a tablet form factor for android
-	var isTablet = osname === 'ipad' || (osname === 'android' && (width > 899 || height > 899));
+	var isTablet = APP.osname === 'ipad' || (APP.osname === 'android' && (APP.width > 899 || APP.height > 899));
 	
 	var Window;
 	if (isTablet) {
@@ -41,10 +46,10 @@ var tracker = GA.getTracker("UA-40209680-1");
 	else {
 		// iPhone and Mobile Web make use of the platform-specific navigation controller,
 		// all other platforms follow a similar UI pattern
-		if (osname === 'iphone') {
+		if (APP.osname === 'iphone') {
 			Window = require('ui/handheld/ios/ApplicationWindow');
 		}
-		else if (osname == 'mobileweb') {
+		else if (APP.osname == 'mobileweb') {
 			Window = require('ui/handheld/mobileweb/ApplicationWindow');
 		}
 		else {
@@ -52,6 +57,8 @@ var tracker = GA.getTracker("UA-40209680-1");
 		}
 	}
 	new Window().open();
+	
+	
 })();
 tracker.trackTiming({
 	category: "",

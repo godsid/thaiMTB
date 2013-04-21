@@ -15,16 +15,19 @@ function InfoView() {
 		top:15,
 		color:'black',
 		font:{fontSize:20},
-		text:"แจ้งปัญหาการใช้งานหรือเสนอแนะปรับปรุงแอพพลิเคชั่น"
+		text:"แจ้งปัญหาการใช้งานหรือเสนอแนะปรับปรุงแอพพลิเคชั่น\nVersion: "+Titanium.App.version,
 	}));
 	self.add(txtArea = Ti.UI.createTextArea({
 		width:'90%',
-		height:'80%',
+		height:'70%',
 		returnKeyType: Ti.UI.RETURNKEY_SEND,
 	}));
 	self.add(btSend = Ti.UI.createButton({
+		top:10,
 		title:"ส่งข้อมูล"
 	}));
+	
+	
 	var client = Ti.Network.createHTTPClient({
 		timeout:15000,
 		onerror:function(e){
@@ -54,11 +57,12 @@ function InfoView() {
 			value: 1
 		});
 		client.open('POST','http://srihawong.info/app/thaimtb_submitInfo.php');
-		client.send({message:txtArea.getValue()});
+		client.send({message:"Version:"+Titanium.App.version+"\n\n"+txtArea.getValue()});
 	});
 	self.addEventListener('focus',function(e){
 		tracker.trackScreen(Ti.Platform.osname+"/infomation");
 	});
+	
 	return self;
 }
 module.exports = InfoView;
