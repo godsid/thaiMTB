@@ -70,7 +70,7 @@ function MasterView() {
 					backgroundColor:secondHandData[i].sticky==true?'#F2B179':((i%2)?'#A9B8C2':'#ECECEC'),
 					id:secondHandData[i].id,
 					//hasChild:true,
-					title:secondHandData[i].title,
+					topic:secondHandData[i].title,
 					layout:'vertical',
 					hasChild:(secondHandData[i].reply>0?true:false),
 				});
@@ -151,7 +151,7 @@ function MasterView() {
 	table.addEventListener('click', function(e) {
 		self.fireEvent('itemSelected', {
 			id:e.rowData.id,
-			name:e.rowData.title,
+			topic:e.rowData.topic,
 			//price:e.rowData.price
 		});
 	});

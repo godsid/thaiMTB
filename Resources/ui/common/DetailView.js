@@ -7,6 +7,19 @@ function DetailView() {
 	var NavBar = require('/ui/handheld/android/NavBar');
 	var navBar = new NavBar();
 	self.add(navBar);
+	/*
+	 * Topic
+	 */
+	var topicLabel = Ti.UI.createLabel({
+		top:0,
+		width:'100%',
+		textAlign:'left',
+		text:'',
+		backgroundColor:'#006699',
+		font:{fontSize:25},
+		color:'#FFA34F',
+	});
+	self.add(topicLabel);
 	
 	var loading = Ti.UI.createActivityIndicator({
 			message: ' Loading...',
@@ -15,11 +28,11 @@ function DetailView() {
 			//height:Ti.UI.SIZE,
 			//width:Ti.UI.SIZE
 	})
-	self.add(loading);
+	
 	var table = Ti.UI.createTableView({
 		separatorColor:'#eff3f9',
 	});
-	loading.show();
+	
 	
 	var client = Ti.Network.createHTTPClient({
 			timeout:15000,
@@ -38,18 +51,7 @@ function DetailView() {
 					self.remove(loading);
 					alert("Missing Data");
 				}
-				/*
-				 * Topic
-				 */
-				var topicLabel = Ti.UI.createLabel({
-					top:0,
-					width:'100%',
-					textAlign:'left',
-					text:data.title,
-					backgroundColor:'#006699',
-					font:{fontSize:25},
-					color:'#FFA34F',
-				});
+				
 				
 				
 				for(var i=0,j=data.reads.length; i<j; i++){
@@ -167,7 +169,7 @@ function DetailView() {
 					//table.appendRow(tbRow);
 				}
 				table.setData(tableData);
-				self.add(topicLabel);
+				
 				self.add(table);
 				loading.hide();
 				self.remove(loading);
@@ -176,6 +178,12 @@ function DetailView() {
 	});
 	
 	self.addEventListener('itemSelected', function(e) {
+		
+		topicLabel.setText(e.topic);
+		self.add(loading);
+		loading.show();
+		tableData = [];
+		table.setData(tableData);
 		client.open('GET','srihawong.info/app/thaimtb_read.php?t='+e.id);
 		client.send();
 	});
