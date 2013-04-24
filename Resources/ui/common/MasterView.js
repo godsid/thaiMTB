@@ -7,18 +7,18 @@ function MasterView() {
 		layout:'vertical',
 	});
 	var tableData = [];
-	
+
 	var loading = Ti.UI.createActivityIndicator({
 			message: ' Loading...',
 			top:'50%',
 			color:'black',
 	})
 	self.add(loading);
-	
+
 	var table = Ti.UI.createTableView({
 		separatorColor:'#eff3f9',
 	});
-	
+
 	var footerTable = Ti.UI.createView({
 		height:50
 	});
@@ -30,7 +30,7 @@ function MasterView() {
 	});
 	footerTable.add(nextButton);
 	//some dummy data for our table view
-	
+
 	loading.show();
 	var secondHandClient = Ti.Network.createHTTPClient({
 		timeout:15000,
@@ -44,7 +44,7 @@ function MasterView() {
 			var secondHandDataHeader = secondHandData.header;
 			secondHandData = secondHandData.secondhand;
 			secondHandClient.open('GET','http://srihawong.info/app/thaimtb_'+forumid+'.php?page='+(parseInt(secondHandDataHeader.page)+1));
-			
+
 			if(secondHandDataHeader.maxpage<=1||secondHandDataHeader.page>=secondHandDataHeader.maxpage){
 				nextButton.removeEventListener('click');
 				nextButton.setTitle('More...');
@@ -53,13 +53,12 @@ function MasterView() {
 				nextButton.setTitle('More...');
 				nextButton.setEnabled(true);	
 			}
-			
+
 			for(var i=0,j=tableData.title = secondHandData.length; i<j; i++){
 				var tbRow = Ti.UI.createTableViewRow({
 					height:'auto',
 					leftImage:'/images/shoppingIcon.png',
 					//color:'#006699',
-					font:{fontSize:20,fontWeight:'bold'},
 					//borderWidth:1,
 					//borderColor:'#eff3f9',
 					backgroundColor:secondHandData[i].sticky==true?'#F2B179':((i%2)?'#A9B8C2':'#ECECEC'),
@@ -70,23 +69,23 @@ function MasterView() {
 					layout:'vertical',
 					hasChild:(secondHandData[i].reply>0?true:false),
 				});
-				
-				
+
+
 				var lbTitle = Ti.UI.createLabel({
 					//text:secondHandData[i].title,
 					bottom:5,
 					left:5,
-					font:{fontSize:20,fontWeight:'bold'},
+					font:{fontSize:APP.mediumFontSize,fontWeight:'bold',fontFamily:APP.fontFamily},
 					color:'#006699',
 					wordWrap:true,
 					//html:secondHandData[i].title+" ("+secondHandData[i].reply+"/"+secondHandData[i].read+")",
 					text:secondHandData[i].title+" ("+secondHandData[i].reply+"/"+secondHandData[i].read+")",
-					
+
 				});
 				tbRow.add(lbTitle);
 				tableData.push(tbRow);
 				//table.appendRow(tbRow);
-				
+
 			  /*
 			  tableData.push({
 			  		height:'auto',
@@ -111,8 +110,8 @@ function MasterView() {
 			*/
 			//nextButton.title='More...';
 			//nextButton.enabled = true;
-			
-			
+
+
 			loading.hide();
 			self.remove(loading);
 			self.add(table);
@@ -141,7 +140,7 @@ function MasterView() {
 	}));
 	*/
 	//table.footerView = footer; 
-	
+
 	secondHandClient.open('GET','http://srihawong.info/app/thaimtb_'+forumid+'.php');
 	secondHandClient.send();
 	table.addEventListener('click', function(e) {
@@ -156,13 +155,13 @@ function MasterView() {
 		secondHandClient.send();
 	});
 	//add behavior
-	
+
 	//table.addEventListener('scroll',function(e){
 		//if(e.firstVisibleItem+e.visibleItemCount == e.totalItemCount ){
 		//	secondHandClient.open('GET','http://srihawong.info/app/thaimtb_secondhand.php?page='+2);
 		//	secondHandClient.send();
 		//}
-		
+
 		//secondHandClient.open('GET','http://srihawong.info/app/thaimtb_secondhand.php?page='+2);
 		//secondHandClient.send();
 	//});

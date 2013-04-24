@@ -4,17 +4,17 @@ function DetailView() {
 		layout:'vertical',
 	});
 	var tableData = [];
-	
-	
+
+
 	/*
 	 * Topic
 	 */
-	var NavBar = require('/ui/common/NavBar');
-	var navBar = new NavBar();
+	//var NavBar = require('/ui/common/NavBar');
+	//var navBar = new NavBar();
 	if(Ti.Platform.osname!='iphone'&&Ti.Platform.osname!='ipad'){
-		self.add(navBar);
+		//self.add(navBar);
 	}
-	
+
 	var topicView = Ti.UI.createView({
 		top:0,
 		left:0,
@@ -26,7 +26,7 @@ function DetailView() {
 					top:0,
 					left:5,
 					width:'100%',
-					
+
 					textAlign:'left',
 					font:{fontSize:15},
 					color:'#FFA34F',
@@ -52,23 +52,23 @@ function DetailView() {
 						//height:APP.height-100,
 						color:'black',
 			});
-	
+
 	/*
 	 * Fetch Data
 	 */
 	var client = Ti.Network.createHTTPClient({
 			timeout:15000,
 			onreadystatechange:function(e){
-				
+
 			},
 			onerror:function(e){
 				Ti.API.debug(e.error);
 				alert('เกิดความผิดพลาดกรุณาลองใหม่อีกครั้ง');
 			},
 			onload:function(e){
-				
+
 				data = JSON.parse(this.responseText);
-				
+
 				if(data.reads.length==0){
 					loading.hide();
 					self.remove(loading);
@@ -91,9 +91,9 @@ function DetailView() {
 						//borderWidth:2,
 						//borderColor:'green',
 						height:100,
-						
+
 					});
-					
+
 					userProfile.add(Ti.UI.createImageView({
 						top:5,
 						left:5,
@@ -104,9 +104,9 @@ function DetailView() {
 						//borderWidth:2,
 						borderRadius:5,
 						defaultImage:'/images/defaultAvatar.png',
-						
+
 					}));
-					
+
 					userProfile.add(Ti.UI.createLabel({
 						left:110,
 						top:5,
@@ -114,7 +114,7 @@ function DetailView() {
 						color:'black',
 						font:{fontSize:12},
 					}));
-					
+
 					userProfile.add(Ti.UI.createLabel({
 						right:5,
 						top:5,
@@ -129,16 +129,16 @@ function DetailView() {
 						color:'black',
 						font:{fontSize:12},
 					}));
-					
+
 					tbRow.add(userProfile);
 					/*
 					 * External image
 					 */
 					//alert(data.reads[i].extImage.length);return false;
-					
+
 					var detailView = Ti.UI.createView({
 						top:0,
-						
+
 					});
 					detailView.add(Ti.UI.createLabel({
 						top:0,
@@ -148,11 +148,11 @@ function DetailView() {
 						text:data.reads[i].detail,
 						//borderWidth:2,
 					}));
-					
+
 					tbRow.add(detailView);
-					
+
 					//tableData.push(tbRow);
-					
+
 					var imageGallery = [];
 					if(data.reads[i].extImage){
 						imageGallery = data.reads[i].extImage;
@@ -174,7 +174,7 @@ function DetailView() {
 							//showHorizontalScrollIndicator: true,
 							layout:'horizontal',
 						});
-						
+
 						for(var k=0;k<imageGallery.length;k++){
 							var imageView = Ti.UI.createImageView({
 								top:0,
@@ -191,7 +191,7 @@ function DetailView() {
 						}
 						tbRow.add(imageScrollView);
 					}
-					
+
 					tableData.push(tbRow);
 					//tableView.appendRow(tbRow);
 				}
@@ -204,7 +204,7 @@ function DetailView() {
 				tracker.trackScreen(Ti.Platform.osname+"/"+forumid+"/"+data.id);
 			}
 	});
-	
+
 	self.addEventListener('itemSelected', function(e) {
 		topicLabel.setText(e.topic);
 		tableData = [];
@@ -216,10 +216,12 @@ function DetailView() {
 		client.open('GET','http://srihawong.info/app/thaimtb_read.php?t='+e.id);
 		client.send();
 	});
+	/*
 	navBar.addEventListener('showInfo', function(e) {
 		self.fireEvent('showInfo',{});
 	});
-	
+	*/
+
 	return self;
 };
 

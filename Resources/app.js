@@ -24,6 +24,11 @@ var APP = {	osname : Ti.Platform.osname,
 			name : Ti.Platform.name,
 			height : Ti.Platform.displayCaps.platformHeight,
 			width : Ti.Platform.displayCaps.platformWidth,
+			smallFontSize:13,
+			mediumFontSize:18,
+			bigFontSize:25,
+			//fontFamily:'Circular',
+			fontFamily:'AppleGothic',
 	};
 Ti.API.debug(Ti.Platform.ostype);
 var GA = require('analytics.google');
@@ -33,12 +38,10 @@ var tracker = GA.getTracker("UA-40209680-1");
 
 // This is a single context application with mutliple windows in a stack
 (function() {
-	
-	
 	//considering tablet to have one dimension over 900px - this is imperfect, so you should feel free to decide
 	//yourself what you consider a tablet form factor for android
 	var isTablet = APP.osname === 'ipad' || (APP.osname === 'android' && (APP.width > 899 || APP.height > 899));
-	
+
 	var Window;
 	if (isTablet) {
 		Window = require('ui/tablet/ApplicationWindow');
@@ -57,8 +60,8 @@ var tracker = GA.getTracker("UA-40209680-1");
 		}
 	}
 	new Window().open();
-	
-	
+
+
 })();
 tracker.trackTiming({
 	category: "",
