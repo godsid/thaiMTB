@@ -27,7 +27,7 @@ function NavBar(){
 		left:5,
 		width:'auto',
 		
-		font:{fontSize:30},
+		font:{fontSize:30,fontFamily:customFront},
 		color:'#005784',
 		text:'กระดานข่าว'
 	});

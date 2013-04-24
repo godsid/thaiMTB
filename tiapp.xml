@@ -9,7 +9,7 @@
     <property name="acs-api-key-development" type="string">n1DMSHuqU5kfcTXMzDOcNtgNT10M1yF4</property>
     <id>info.srihawong.thaimtb</id>
     <name>ThaiMTB</name>
-    <version>1.0.1</version>
+    <version>1.0.1.3</version>
     <publisher>Banpot.S</publisher>
     <url>http://banpot.srihawong.info</url>
     <description>not specified</description>
@@ -48,6 +48,7 @@
         <module platform="commonjs" version="2.3.2">ti.cloud</module>
         <module platform="iphone" version="1.0">analytics.google</module>
         <module platform="android" version="1.0">analytics.google</module>
+        <module platform="android">ti.cloudpush</module>
     </modules>
     <deployment-targets>
         <target device="tizen">false</target>

@@ -15,12 +15,16 @@ if (Ti.version < 1.8 ) {
 	alert('Sorry - this application template requires Titanium Mobile SDK 1.8 or later');	  	
 }
 var forumid = 'news';
+var customFont = 'Circular';
 
 var GA = require('analytics.google');
+var Cloud = require('ti.cloud');
+var CloudPush = require('ti.cloudpush'); 
 //GA.optOut = true;
 GA.debug = true;
 
 var tracker = GA.getTracker("UA-40209680-1");
+
 
 // This is a single context application with mutliple windows in a stack
 (function() {
@@ -53,6 +57,64 @@ var tracker = GA.getTracker("UA-40209680-1");
 	}
 	new Window().open();
 })();
+
+CloudPush.retrieveDeviceToken({
+        success: function deviceTokenSuccess(e) {
+			alert('Device Token: ' + e.deviceToken);
+			deviceToken = e.deviceToken
+			Cloud.Users.login({
+			     login: 'godsid',
+			     password: '1234qwer'
+			 }, function (e) {
+			     if (e.success) {
+			     	  var user = e.users[0];
+			          alert('Success:\n' + 'id: ' + user.id + '\n' +
+			            'first name: ' + user.first_name + '\n' +
+			            'last name: ' + user.last_name);
+			            
+					Cloud.PushNotifications.subscribe({
+			            channel : 'alert',
+			            device_token : deviceToken,
+			            type: 'android',
+			        }, function(a) {
+			            if(a.success) {
+			                alert('Success');
+			            } else {
+			                alert('Error:\n' + ((a.error && e.message) || JSON.stringify(a)));
+			            }
+			        });
+			     } else {
+			         alert('Error: ' +((e.error && e.message) || JSON.stringify(e)));
+			     }
+			});
+        },
+        error: function deviceTokenError(e) {
+            alert('Failed to register for push! ' + e.error);
+     }
+});
+CloudPush.addEventListener('callback', function(evt){
+	alert(evt);
+});
+CloudPush.addEventListener('trayClickLaunchedApp', function(evt){
+    Ti.API.info('Tray Click Launched App (app was not running)');
+    //alert('Tray Click Launched App (app was not running');
+});
+
+CloudPush.addEventListener('trayClickFocusedApp', function(evt){
+    Ti.API.info('Tray Click Focused App (app was already running)');
+    //alert('Tray Click Focused App (app was already running)');
+});
+Cloud.PushNotifications.notify({
+    channel: 'alert',
+    payload: 'Welcome to push notifications'
+}, function (e) {
+    if (e.success) {
+        alert('Success');
+    } else {
+        alert('Error:\n' +
+            ((e.error && e.message) || JSON.stringify(e)));
+    }
+});
 tracker.trackTiming({
 	category: "",
 	time: 10,
