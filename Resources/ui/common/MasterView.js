@@ -31,7 +31,7 @@ function MasterView() {
 		top:0,
 		right:5,
 		title:'More...',
-		font:{fontFamily:customFront},
+		//font:{fontFamily:customFront},
 		enabled:false,
 	});
 	footerTable.add(nextButton);
@@ -65,7 +65,7 @@ function MasterView() {
 					height:'auto',
 					leftImage:'/images/shoppingIcon.png',
 					//color:'#006699',
-					font:{fontSize:20,fontWeight:'bold',fontFamily:customFront},
+					font:{fontSize:20,fontWeight:'bold',fontFamily:'Circular'},
 					//borderWidth:1,
 					//borderColor:'#eff3f9',
 					backgroundColor:secondHandData[i].sticky==true?'#F2B179':((i%2)?'#A9B8C2':'#ECECEC'),
@@ -81,7 +81,7 @@ function MasterView() {
 					//text:secondHandData[i].title,
 					bottom:5,
 					left:5,
-					font:{fontSize:20,fontWeight:'bold',fontFamily:customFront},
+					font:{fontSize:20,fontWeight:'bold',fontFamily:'Circular'},
 					color:'#006699',
 					wordWrap:true,
 					//html:secondHandData[i].title+" ("+secondHandData[i].reply+"/"+secondHandData[i].read+")",
