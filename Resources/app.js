@@ -21,7 +21,7 @@ var GA = require('analytics.google');
 var Cloud = require('ti.cloud');
 var CloudPush = require('ti.cloudpush'); 
 //GA.optOut = true;
-GA.debug = fals;
+GA.debug = false;
 
 var tracker = GA.getTracker("UA-40209680-1");
 
